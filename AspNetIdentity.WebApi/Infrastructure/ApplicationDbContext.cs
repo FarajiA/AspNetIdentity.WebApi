@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using AspNetIdentity.WebApi.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
+using AspNetIdentity.WebApi.AuthEntities;
 
 namespace AspNetIdentity.WebApi.Infrastructure
 {
@@ -14,7 +17,10 @@ namespace AspNetIdentity.WebApi.Infrastructure
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
+        public DbSet<ConnectedUsers> ConnectedUsers { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

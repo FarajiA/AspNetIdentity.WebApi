@@ -78,7 +78,46 @@ namespace AspNetIdentity.WebApi.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
+
+            CreateTable(
+                "dbo.Clients",
+                c => new
+                {
+                    Id = c.String(nullable: false, maxLength: 128),
+                    Secret = c.String(nullable: false),
+                    Name = c.String(nullable: false, maxLength: 100),
+                    ApplicationType = c.Int(nullable: false),
+                    Active = c.Boolean(nullable: false),
+                    RefreshTokenLifeTime = c.Int(nullable: false),
+                    AllowedOrigin = c.String(maxLength: 100),
+                })
+                .PrimaryKey(t => t.Id);
+
+
+            CreateTable(
+                "dbo.RefreshTokens",
+                c => new
+                {
+                    Id = c.String(nullable: false, maxLength: 128),
+                    Subject = c.String(nullable: false, maxLength: 50),
+                    ClientId = c.String(nullable: false, maxLength: 50),
+                    IssuedUtc = c.DateTime(nullable: false),
+                    ExpiresUtc = c.DateTime(nullable: false),
+                    ProtectedTicket = c.String(nullable: false),
+                })
+                .PrimaryKey(t => t.Id);
             
+             CreateTable(
+                "dbo.ConnectedUsers",
+                c => new
+                {
+                    ConnectedUserID = c.String(nullable: false, maxLength: 300),
+                    ConnectionId = c.String(nullable: false, maxLength: 300),
+                    UserID = c.String(nullable: false, maxLength: 300),
+                    Date = c.DateTime(nullable: false)
+                })
+                .PrimaryKey(t => t.ConnectedUserID);
+
         }
         
         public override void Down()
