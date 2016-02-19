@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using AspNetIdentity.WebApi.AuthEntities;
+using AspNetIdentity.WebApi.Enums;
+using AspNetIdentity.WebApi.Helpers;
+
 namespace AspNetIdentity.WebApi.Migrations
 {
     using AspNetIdentity.WebApi.Infrastructure;
@@ -46,6 +51,42 @@ namespace AspNetIdentity.WebApi.Migrations
             var adminUser = manager.FindByName("SuperPowerUser");
 
             manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+
+            if (context.Clients.Count() > 0)
+            {
+                return;
+            }
+
+            context.Clients.AddRange(BuildClientsList());
+            context.SaveChanges();
+        }
+
+        private static List<Client> BuildClientsList()
+        {
+
+            List<Client> ClientsList = new List<Client>
+            {
+                new Client
+                { Id = "ngAuthApp",
+                    Secret= HashHelper.GetHash("iLov3L@amp"),
+                    Name="AngularJS front-end Application",
+                    ApplicationType =  ApplicationTypes.JavaScript,
+                    Active = true,
+                    RefreshTokenLifeTime = 7200,
+                    AllowedOrigin = "http://ngauthenticationweb.azurewebsites.net"
+                },
+                new Client
+                { Id = "consoleApp",
+                    Secret = HashHelper.GetHash("iHat3L@amp"),
+                    Name="Console Application",
+                    ApplicationType = ApplicationTypes.NativeConfidential,
+                    Active = true,
+                    RefreshTokenLifeTime = 14400,
+                    AllowedOrigin = "*"
+                }
+            };
+
+            return ClientsList;
         }
     }
 }

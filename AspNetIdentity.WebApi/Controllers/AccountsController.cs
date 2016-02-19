@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Net.Http;
+using System.Web.Http.Results;
+using AspNetIdentity.WebApi.Enums;
+using AspNetIdentity.WebApi.Hubs;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -258,6 +261,20 @@ namespace AspNetIdentity.WebApi.Controllers
             
             return Ok();
         }
+
+        [Authorize]
+        [Route("notify")]
+        public async Task<IHttpActionResult> PostNotifyAccepted([FromBody] dynamic notification)
+        {
+            string ID = HttpContext.Current.User.Identity.GetUserId();
+            ApplicationUser user = await AppUserManager.FindByIdAsync(ID);
+
+            List<string> userList = new List<string>() { notification.userID };
+            await CentralHub.Static_SendNotification(NotificationTypes.RequestAccepted, user, userList);
+
+            return Ok();
+        }
+
 
         [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/removeclaims")]
@@ -537,7 +554,6 @@ namespace AspNetIdentity.WebApi.Controllers
                     {
                         return null;
                     }
-
                 }
 
             }

@@ -23,23 +23,8 @@ namespace AspNetIdentity.WebApi
 {
     public class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthServerOptions;
-
-        static Startup()
-        {
-            OAuthServerOptions = new OAuthAuthorizationServerOptions()
-            {
-                //For Dev enviroment only (on production should be AllowInsecureHttp = false)
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/oauth/token"),
-                AuthorizeEndpointPath = new PathString("/oauth/external"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:4700"),
-                RefreshTokenProvider = new SimpleRefreshTokenProvider()
-            };
-        }
-
+        public static OAuthAuthorizationServerOptions OAuthServerOptions = null;
+        
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions = null;
         public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
         public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
@@ -65,7 +50,20 @@ namespace AspNetIdentity.WebApi
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
-            
+            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
+
+            OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                //For Dev enviroment only (on production should be AllowInsecureHttp = false)
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/oauth/token"),
+                AuthorizeEndpointPath = new PathString("/oauth/external"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJwtFormat("http://localhost:4700"),
+                RefreshTokenProvider = new SimpleRefreshTokenProvider()
+            };
+
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
 
@@ -74,7 +72,7 @@ namespace AspNetIdentity.WebApi
             {
                 ClientId = "xxxxxx",
                 ClientSecret = "xxxxxx",
-                Provider = new GoogleOAuth2AuthenticationProvider()
+                Provider = new GoogleAuthProvider()
             };
             app.UseGoogleAuthentication(googleAuthOptions);
 
@@ -83,7 +81,7 @@ namespace AspNetIdentity.WebApi
             {
                 AppId = "xxxxxx",
                 AppSecret = "xxxxxx",
-                Provider = new FacebookAuthenticationProvider()
+                Provider = new FacebookAuthProvider()
             };
             app.UseFacebookAuthentication(facebookAuthOptions);
         }
