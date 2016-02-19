@@ -4,10 +4,10 @@ Tutorial which will cover how to integrate ASP.NET Identity system with ASP.NET 
 
 This repo acts a skeleteon for the [tutorial described above](http://bitoftech.net/2015/01/21/asp-net-identity-2-with-asp-net-web-api-2-accounts-management/), the skeleton core implements the following:
 
-+ _Oauth + JWT Authentication_
-+ _Refresh Tokens_
-+ _SignalR Token Access_
-+ _SignalR Notification_
-+ _3rd Party Login - Facebook + Google Plus
-+ _AudienceID & AudienceSecret key generator_
++ __Oauth + JWT Authentication__
++ __Refresh Tokens__
++ __SignalR Token Access__
++ __SignalR Notification__
++ __3rd Party Login - Facebook + Google Plus__
++ __AudienceID & AudienceSecret key generator__
 
