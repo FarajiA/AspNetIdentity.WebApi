@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentity.WebApi", "AspNetIdentity.WebApi\AspNetIdentity.WebApi.csproj", "{FE46F959-09B9-4182-9AEC-E66364EFC1AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationServer.Api", "JWTAspNetWebApi-master\AuthorizationServer.Api\AuthorizationServer.Api.csproj", "{EFEA857C-7465-42FD-B3F5-3B225863E9E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FE46F959-09B9-4182-9AEC-E66364EFC1AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE46F959-09B9-4182-9AEC-E66364EFC1AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE46F959-09B9-4182-9AEC-E66364EFC1AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEA857C-7465-42FD-B3F5-3B225863E9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEA857C-7465-42FD-B3F5-3B225863E9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEA857C-7465-42FD-B3F5-3B225863E9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEA857C-7465-42FD-B3F5-3B225863E9E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,7 +38,7 @@ namespace AspNetIdentity.WebApi.Controllers
             _repo = new AuthRepository();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
@@ -48,7 +48,7 @@ namespace AspNetIdentity.WebApi.Controllers
             return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUser(string Id)
         {
@@ -64,7 +64,7 @@ namespace AspNetIdentity.WebApi.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("user/{username}")]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
